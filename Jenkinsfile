@@ -2,12 +2,12 @@ pipeline {
   environment {
      ENV="stg"   //Change the environment accordingly ex: stg for staging and  pr for production
    	 PROJECT = "mobitel_pipeline"
- 	 APP_NAME = "webhook"      //Change the application name , which will also be the deployment name
+ 	 APP_NAME = "sample"      //Change the application name , which will also be the deployment name
      CIR = "${ENV}-docker-reg.mobitel.lk"
-     CIR_USER = 'mobitel'
-     CIR_PW = credentials('cir-pw')
-     KUB_NAMESPACE = "ecom-app"               //Change the namespace accordingly
-     IMAGE_TAG = "${CIR}/${PROJECT}/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
+     CIR_USER = 'natheeshshaan@gmail,com'
+     CIR_PW = 'Qwerty@123'
+     KUB_NAMESPACE = "deployments"               //Change the namespace accordingly
+     IMAGE_TAG = "natheeshan/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
      EXPOSE_PORT="8080"                    //Change the service expose port accordingly
      HARBOUR_SECRET="harbor-stg"              //Change the harbour secret name accordingly
      
@@ -31,24 +31,12 @@ pipeline {
         }
       }  
 
-              stage('Run SonarQube analysis') {
-            agent any
-            steps {
-                script {
-                    def scannerHome = tool 'sonar-scanner'
-                    withSonarQubeEnv('sonar-server') {
-                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=./src -Dsonar.java.binaries=target/classes -Dsonar.projectKey=${APP_NAME} -Dsonar.projectName=${APP_NAME}  -Dsonar.junit.reportPaths=target/surefire-reports -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
-                    }
-                }
-            }
-        }
-
 	  stage('Building & Deploy Image') {
       	agent any
 		    steps{
               sh '''
               
-          		docker login -u ${CIR_USER} -p ${CIR_PW} ${CIR}
+          		docker login -u ${CIR_USER} -p ${CIR_PW} 
           		mkdir -p dockerImage/
 		  		cp Dockerfile dockerImage/
          		cp target/*.jar dockerImage/
@@ -94,7 +82,7 @@ pipeline {
                sh '''
                
                mkdir -p /root/.kube/
-               cp /root/.cert/${ENV}/config /root/.kube/
+               cp /var/jenkins_home/config /root/.kube/
                '''
                script {
                def isDeployed = sh(returnStatus: true, script: 'kubectl -n ${KUB_NAMESPACE} set image deployment/${APP_NAME}  ${APP_NAME}=${IMAGE_TAG}  --record ')
