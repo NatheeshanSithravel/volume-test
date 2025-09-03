@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="log-path">/logs/ECLRestService</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="file-log" fileName="${log-path}/eclRestService.log"
+                     filePattern="${log-path}/eclRestService-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.mobitel.ecl" level="debug" additivity="false">
+            <appender-ref ref="file-log"/>
+        </Logger>
+
+        <Logger name="com.zaxxer.hikari" level="debug" additivity="true">
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <Root level="info" additivity="false">
+            <appender-ref ref="file-log"/>
+            <appender-ref ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
