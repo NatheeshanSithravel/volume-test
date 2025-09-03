@@ -4,7 +4,7 @@ pipeline {
    	 PROJECT = "mobitel_pipeline"
  	 APP_NAME = "sample"      //Change the application name , which will also be the deployment name
      CIR = "${ENV}-docker-reg.mobitel.lk"
-     CIR_USER = 'natheeshshaan@gmail,com'
+     CIR_USER = 'natheeshshaan@gmail.com'
      CIR_PW = 'Qwerty@123'
      KUB_NAMESPACE = "deployments"               //Change the namespace accordingly
      IMAGE_TAG = "natheeshan/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
