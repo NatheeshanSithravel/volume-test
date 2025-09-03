@@ -24,10 +24,8 @@ pipeline {
                 }
         }
         steps {
-            sh 'mvn clean test -Dsurefire.skipAfterFailureCount=0 -DskipTests=false -Dmaven.test.failure.ignore=true'
             sh 'mvn clean install'
             // Publish JUnit results
-            junit 'target/surefire-reports/*.xml'
         }
       }  
 
