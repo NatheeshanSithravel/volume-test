@@ -107,7 +107,7 @@
         <dependency>
             <groupId>com.ibm.informix</groupId>
             <artifactId>jdbc</artifactId>
-            <version>4.50.11.2</version>
+            <version>4.50.13</version>
         </dependency>
 
         <dependency>
