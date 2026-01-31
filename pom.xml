@@ -29,7 +29,7 @@
     <properties>
         <java.version>21</java.version>
         <!-- Log4j version management -->
-        <log4j.version>2.20.0</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
     </properties>
     <dependencies>
         <dependency>
